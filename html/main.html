@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <div id="topbar" class="container-fluid bg-danger" style="margin-bottom: 0;">
+        <p id="topbar-text">Lower Higher</p>
+    </div>
+
+
+    <div id="innehåll" class="container-fluid bg-primary">
+
+        <div id="toppen" class="row justify-content-center bg-info bg-gradient">
+            <div id="toppen-text" class="text-center">
+                <p >Du ska gissa vilken av dessa låtar som har mest visningar på YouTube</p>
+                <button id="börja" onclick="run()">Börja</button>
+            </div>
+        </div>
+
+        <div class="row bg-danger">   
+
+            <div id="vänster" class="col-6 d-flex justify-content-center bg-warning bg-gradient">
+                <div>
+                    <h1>Lite info</h1>
+                    <ul id="ul1">
+                    </ul>
+                    <button id="denna1" onclick="rättVideoBTN1()">Denna har mest visningar</button>
+                </div>
+            </div>
+
+
+            <div id="höger" class="col-6 d-flex justify-content-center bg-warning bg-gradient">
+                <div>
+                    <h1 class="lite-info">Lite info</h1>
+                    <ul id="ul2">
+                    </ul>
+                    <button id="denna2" onclick="rättVideoBTN2()">Denna har mest visningar</button>
+                </div>
+            </div>
+        </div> 
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script>
+        //https://www.youtube.com/watch?v=CD-E-LDc384&ab_channel=Metallica                  //Enter Sandman            //594 mil
+        //https://www.youtube.com/watch?v=9jK-NcRmVcw&ab_channel=EuropeVEVO                 //Final Count Down         //1001 mil
+        //https://www.youtube.com/watch?v=l5aZJBLAu1E&ab_channel=TheWeatherGirlsVEVO        //It's Raining Men         //81 mil
+        //https://www.youtube.com/watch?v=XEjLoHdbVeE&ab_channel=AbbaVEVO                   //Gimme! Gimme! Gimme!     //387 mil
+        //https://www.youtube.com/watch?v=0J2QdDbelmY&ab_channel=TheWhiteStripes            //White Stripes            //563 mil
+        //https://www.youtube.com/watch?v=0qanF-91aJo&ab_channel=BlackSabbath               //Paranoid                 //210 mil
+        //https://www.youtube.com/watch?v=O4irXQhgMqg&ab_channel=ABKCOVEVO                  //Paint it Black           //459 mil
+        //https://www.youtube.com/watch?v=oVWEb-At8yc&ab_channel=Sabaton                    //Bismark                  //76 mil
+        //https://www.youtube.com/watch?v=4-43lLKaqBQ&ab_channel=TheAnimalsTributeChannel   //House of the Rising Sun  //212 mil
+        //https://www.youtube.com/watch?v=N8NcQzMQN_U&ab_channel=JoseFelicianoVEVO          //Feliz Navidad            //29 mil
+        function vilkenVideo(){
+            const videoIds = [
+                "CD-E-LDc384",
+                "9jK-NcRmVcw",
+                "l5aZJBLAu1E",
+                "XEjLoHdbVeE",
+                "0J2QdDbelmY",
+                "0qanF-91aJo",
+                "O4irXQhgMqg",
+                "oVWEb-At8yc",
+                "4-43lLKaqBQ",
+                "N8NcQzMQN_U",
+            ]
+            const randomIndex = Math.floor(Math.random() * videoIds.length);
+            return videoIds[randomIndex];
+        }
+        const apiKey = 'AIzaSyCSFeEL7iEZxBxXvWY8iJHHUeSqKsQNtcQ';
+        let visningar1 = 0
+        let visningar2 = 0
+        let video1 = vilkenVideo()
+        let video2 = vilkenVideo()
+
+        function run(){
+            function funktion1(){
+                const ul = document.querySelector('#ul1');
+                ul.innerHTML = '';
+                fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${video1}&key=${apiKey}`)
+                    .then(res => {
+                        return res.json();
+                    })
+                    .then(data => {
+                        let kanal = `<li>Kanal: ${data.items[0].snippet.channelTitle}</li>`;
+                        let datum = `<li>Datum: ${data.items[0].snippet.publishedAt}</li>`;
+                        let titel = `<li>Titel: ${data.items[0].snippet.title}</li>`;
+                        document.querySelector("#ul1").insertAdjacentHTML("beforeend", kanal, "\n")
+                        document.querySelector("#ul1").insertAdjacentHTML("beforeend", datum, "\n")
+                        document.querySelector("#ul1").insertAdjacentHTML("beforeend", titel, "\n")                                                                                                                                                                     
+                    })
+            }
+            function funktion2(){
+                const ul = document.querySelector('#ul2');
+                ul.innerHTML = '';
+                fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${video2}&key=${apiKey}`)
+                    .then(res => {
+                        return res.json();
+                    })
+                    .then(data => {
+                        let kanal = `<li>Kanal: ${data.items[0].snippet.channelTitle}</li>`;
+                        let datum = `<li>Datum: ${data.items[0].snippet.publishedAt}</li>`;
+                        let titel = `<li>Titel: ${data.items[0].snippet.title}</li>`;
+                        document.querySelector("#ul2").insertAdjacentHTML("beforeend", kanal, "\n")
+                        document.querySelector("#ul2").insertAdjacentHTML("beforeend", datum, "\n")
+                        document.querySelector("#ul2").insertAdjacentHTML("beforeend", titel, "\n")
+                    })
+            }
+            funktion1()
+            funktion2()
+            
+        }
+        function rättVideoBTN1(){
+
+            if (video1 === "CD-E-LDc384"){
+                    visningar2 = 594
+                }
+                else if (index === 1){
+                    visningar2 = 1001
+                }
+                else if (index === 2){
+                    visningar2 = 81
+                }
+                else if (index === 3){
+                    visninga2 = 387
+                }
+                else if (index === 4){
+                    visningar2 = 563
+                }
+                else if (index === 5){
+                    visningar2 = 210
+                }
+                else if (index === 6){
+                    visningar2 = 459
+                }
+                else if (index === 7){
+                    visningar2 = 76
+                }
+                else if (index === 8){
+                    visningar2 = 212
+                }
+                else if (index === 9){
+                    visningar2 = 29
+                } 
+            })
+        }
+        function rättVideoBTN2(){
+            if (visningar2 > visningar1) {
+                alert("Du gissade rätt!");
+            }
+            else if (visningar1 > visningar2) {
+                alert("Du gissade fel!");
+            }
+        }
+    </script>
+</body>
+</html>

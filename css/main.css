@@ -1,0 +1,39 @@
+* {
+    overflow: hidden;
+}
+
+.container-fluid {
+    margin-bottom: 0;
+}
+
+h1 {
+    margin-top: 10vh;
+}
+
+#börja {
+    margin-bottom: 3vh;
+}
+
+#denna1 {
+    margin-top: 5vh;
+}
+
+#denna2 {
+    margin-top: 5vh;
+}
+
+#topbar-text {
+    padding-top: 1vh;
+    font-weight: bold;
+    font-size: larger;
+}
+
+#toppen-text {
+    padding-top: 1vh;
+    font-weight: bold;
+    font-size: xx-large;
+}
+
+#vänster, #höger {
+    height: 100vh;
+}
